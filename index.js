@@ -1,6 +1,9 @@
 const LinkedList = require('./linked-list.js');
+const DoubleLinkedList = require('./double-linked-list.js');
 
 const SLL = new LinkedList();
+const DLL = new DoubleLinkedList();
+
 function display(linkedList){
   let currNode = linkedList.head;
   if (!linkedList.head) {
@@ -84,6 +87,29 @@ function reverse(linkedList){
 
   linkedList.head = prevNode;
 }
+function reverseDouble(linkedList){
+  if (!linkedList.head || !linkedList.head.next) {
+    console.log('invalid list');
+    return;
+  }
+  
+  let prevNode = null;
+  let currNode = linkedList.head;
+  let nextNode;
+
+  while (currNode) {
+    nextNode = currNode.next;
+    if(!nextNode === linkedList.tail){
+      nextNode.previous = currNode;
+    }
+    currNode.next = prevNode;
+    prevNode = currNode;
+    currNode = nextNode;
+   
+  }
+
+  linkedList.head = prevNode;
+}
 function threeFromEnd(linkedList){
   if (size(linkedList) < 3 ){
     console.log('not long enough');
@@ -124,24 +150,54 @@ function findMiddle(linkedList){
   }
   return currNode;
 }
+function isCycle(linkedList){
+  let values = [];
+  if (linkedList.head === null) {
+    return null;
+  }
+  else {
+    let tempNode = linkedList.head;
+    while (tempNode.next !== null) {
+      if(values.includes(tempNode.value)){
+        return true;
+      }
+      values.push(tempNode.value);
+      tempNode = tempNode.next;
+    }
+  }
+  return false;
+}
 function main(){
-  SLL.insertFirst('Apollo');
-  SLL.insertLast('Boomer');
-  SLL.insertLast('Helo');
-  SLL.insertLast('Husker');
-  SLL.insertLast('Starbuck');
-  SLL.insertLast('Tauhida');
-  SLL.insertAfter('Helo', 'Hotdog');
-  SLL.insertBefore('Boomer', 'Athena');
-  // SLL.insertAt('Kat', 2);
-  // console.log(size(SLL));
-  // console.log(isEmpty(SLL));
-  //console.log(findPrevious(SLL , 'Helo'));
-  // console.log(findLast(SLL));
-  // reverse(SLL);
-  // console.log(threeFromEnd(SLL));
-  console.log(findMiddle(SLL));
-  console.log(display(SLL));
+  // SLL.insertFirst('Apollo');
+  // SLL.insertLast('Boomer');
+  // SLL.insertLast('Helo');
+  // SLL.insertLast('Husker');
+  // SLL.insertLast('Starbuck');
+  // SLL.insertLast('Tauhida');
+  // SLL.insertAfter('Helo', 'Hotdog');
+  // SLL.insertBefore('Boomer', 'Athena');
+  // // SLL.insertAt('Kat', 2);
+  // // console.log(size(SLL));
+  // // console.log(isEmpty(SLL));
+  // //console.log(findPrevious(SLL , 'Helo'));
+  // // console.log(findLast(SLL));
+  // // reverse(SLL);
+  // // console.log(threeFromEnd(SLL));
+  // // SLL.makeUglyCycle('ugly');
+  // console.log(isCycle(SLL));
+  // // console.log(findMiddle(SLL));
+  // // console.log(display(SLL));
+  DLL.insertFirst('potato');
+  DLL.insertFirst('potto');
+  DLL.insertLast('Patoat');
+  DLL.insertBefore('potto', 'wee');
+  DLL.insertAfter('Patoat', 'bear');
+  DLL.insertAfter('potato', 'bee');
+  DLL.remove('potato');
+  DLL.insertAt('beees', 2);
+  reverseDouble(DLL);
+  console.log(display(DLL));
+  // console.log(DLL.find('beees'));
 }
 
 main();
